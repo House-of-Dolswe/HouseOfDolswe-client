@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import Slider from "react-slick";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
@@ -34,7 +35,13 @@ export default function Onboarding() {
         <Slider {...settings} ref={sliderRef}>
           <SlideBox>
             <SlideText>돌쇠의 집은<br />돌쇠의 목소리 아카이브예요</SlideText>
-            <ChatImg src={ChatExample} alt="Logo Text White" />
+            <ChatImg 
+              src={ChatExample} 
+              alt="Chatting Example"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            />
           </SlideBox>
           <SlideBox>
             <SlideText>사용자님,<br />어떤 상황에서<br />돌쇠의 집을 쓰고 싶으신가요?</SlideText>
@@ -44,7 +51,12 @@ export default function Onboarding() {
           </SlideBox>
           <SlideBox>
             <SlideText>이런 상황에서<br />돌쇠의 집을 활용해보세요</SlideText>
-            <SituationImg src={SituationExample} alt="Logo Text White" />
+            <SituationImg 
+              src={SituationExample} 
+              alt="Situation Example"
+              animate={currentSlide === 3 ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+             />
           </SlideBox>
         </Slider>
       </SliderWrapper>
@@ -107,7 +119,7 @@ const SlideText = styled.p`
   padding: 8vh 0 0 8vw;
 `
 
-const ChatImg = styled.img`
+const ChatImg = styled(motion.img)`
   display: block;
   margin: 0 auto;
   margin-top: 15vh;
@@ -115,7 +127,7 @@ const ChatImg = styled.img`
   height: auto;
 `;
 
-const SituationImg = styled.img`
+const SituationImg = styled(motion.img)`
   display: block;
   margin: 0 auto;
   margin-top: 10vh;

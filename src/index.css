@@ -1,0 +1,10 @@
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; /* 세로/가로 스크롤 제거 */
+}
+
+* {
+  box-sizing: border-box;
+}

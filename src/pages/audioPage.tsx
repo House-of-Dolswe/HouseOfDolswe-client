@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import styled from "styled-components";
 import useLoading from "../hooks/useLoading";
+import Header from "../components/header";
 import Spinner from "../../public/loadingSpinner.gif";
 
 const Container = styled.div `
   height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
 `;
@@ -37,7 +37,8 @@ export default function AudioPage() {
 
   return (
     <Container>
-      {isLoading ? <SpinnerImg src={Spinner} alt="Loading"/> : <p>메인 화면</p>}
+      {isLoading ? <SpinnerImg src={Spinner} alt="Loading"/> : 
+      <Header />}
     </Container>
   );
 }

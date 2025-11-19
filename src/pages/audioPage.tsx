@@ -4,6 +4,15 @@ import useLoading from "../hooks/useLoading";
 import Header from "../components/header";
 import Spinner from "../../public/loadingSpinner.gif";
 
+
+const LoadingContainer = styled.div `
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
 const Container = styled.div `
   height: 100vh;
   display: flex;
@@ -36,9 +45,15 @@ export default function AudioPage() {
   }, []);
 
   return (
-    <Container>
-      {isLoading ? <SpinnerImg src={Spinner} alt="Loading"/> : 
-      <Header />}
-    </Container>
+    <>
+      {isLoading ?
+      <LoadingContainer>
+        <SpinnerImg src={Spinner} alt="Loading"/>
+      </LoadingContainer>
+      : 
+      <Container>
+        <Header />  
+      </Container>}
+    </>
   );
 }

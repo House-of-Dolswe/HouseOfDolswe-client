@@ -3,6 +3,7 @@ import styled from "styled-components";
 import useLoading from "../hooks/useLoading";
 import Header from "../components/header";
 import Footer from "../components/footer";
+import AudioItem from "../components/audioItem";
 import Spinner from "../../public/loadingSpinner.gif";
 
 
@@ -20,9 +21,12 @@ const Container = styled.div `
   flex-direction: column;
 `;
 
-
 const SpinnerImg = styled.img`
   width: 10vw;
+`;
+
+const FooterWrapper = styled.div`
+  margin-top: auto;   // 핵심
 `;
 
 
@@ -53,7 +57,10 @@ export default function AudioPage() {
       :
       <Container>
         <Header />
-        <Footer />
+        <AudioItem />
+        <FooterWrapper>
+          <Footer />
+        </FooterWrapper>
       </Container>}
     </>
   );

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import styled from "styled-components";
 import useLoading from "../hooks/useLoading";
 import Header from "../components/header";
+import Footer from "../components/footer";
 import Spinner from "../../public/loadingSpinner.gif";
 
 
@@ -16,7 +17,6 @@ const LoadingContainer = styled.div `
 const Container = styled.div `
   height: 100vh;
   display: flex;
-  align-items: center;
   flex-direction: column;
 `;
 
@@ -50,9 +50,10 @@ export default function AudioPage() {
       <LoadingContainer>
         <SpinnerImg src={Spinner} alt="Loading"/>
       </LoadingContainer>
-      : 
+      :
       <Container>
-        <Header />  
+        <Header />
+        <Footer />
       </Container>}
     </>
   );

@@ -6,12 +6,12 @@ import BookmarkOn from '../../public/bookmarkFill.svg';
 
 const Container = styled.div`
   width: 100%;
-  height: 10vh;
+  height: 9.5vh;
   display: flex;
   border-bottom: 0.7vw solid #F2F2F2;
 `
 const ProfileBox = styled.img`
-  width: 15vw;
+  width: 13.5vw;
   height: auto;
   displat: flex;
   justify-content: center;
@@ -26,7 +26,7 @@ const TextWrapper = styled.div`
 `
 const LineBox = styled.p`
   font-weight: bold;
-  font-size: 4.5vw;
+  font-size: 4vw;
   margin: 0;
 `
 const DetailWrapper = styled.div`
@@ -35,12 +35,12 @@ const DetailWrapper = styled.div`
 `
 const NameBox = styled.p`
   color: #A304FF;
-  font-size: 3.5vw;
+  font-size: 3.2vw;
   margin: 0;
 `
 const TagBox = styled.p`
   color: #8E8E93;
-  font-size: 3.5vw;
+  font-size: 3.2vw;
   margin: 0;
   margin-left: 1.2vw;
 `
@@ -59,9 +59,13 @@ const BookmarkIcon = styled.button`
   outline: none;
 ` 
 
+interface AudioItemProps {
+  title: string;
+  name: string;
+  tags: string[];
+}
 
-
-export default function AudioItem() {
+export default function AudioItem({ title, name, tags }: AudioItemProps) {
 
   const [isBookmarked, setIsBookmarked] = useState(false);
 
@@ -73,12 +77,12 @@ export default function AudioItem() {
     <Container>
         <ProfileBox src={ProfileImg} />
         <TextWrapper>
-            <LineBox>문 앞에 두고 가세요</LineBox>
+            <LineBox>{title}</LineBox>
             <DetailWrapper>
-                <NameBox>장춘배</NameBox>
-                <TagBox>#택배</TagBox>
-                <TagBox>#배달</TagBox>
-                <TagBox>#당근</TagBox>
+                <NameBox>{name}</NameBox>
+                {tags.map((tag, index) => (
+                  <TagBox key={index}>#{tag}</TagBox>
+                ))}
             </DetailWrapper>
         </TextWrapper>
         <BookmarkWrapper>

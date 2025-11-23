@@ -29,8 +29,56 @@ const FooterWrapper = styled.div`
   margin-top: auto;
 `;
 
+interface AudioData {
+  title: string;
+  name: string;
+  tags: string[];
+}
 
 export default function AudioPage() {
+  const audioMockData: AudioData[] = [
+  {
+    
+    title: "누구세요?",
+    name: "장춘배",
+    tags: ["택배", "배달", "당근"],
+  },
+  {
+    
+    title: "네~ 문 앞에 두고 가세요",
+    name: "장춘배",
+    tags: ["택배", "배달", "당근"],
+  },
+  {
+    
+    title: "문 앞에 있는 거 가져가시면 돼요",
+    name: "김OO",
+    tags: ["택배", "배달", "당근"],
+  },
+  {
+    
+    title: "제가 지금 씻고 있어서요~",
+    name: "김OO",
+    tags: ["택배", "배달", "당근"],
+  },
+  {
+    
+    title: "지금 못 나가요",
+    name: "슈퍼톤AI - VoiceA",
+    tags: ["택배", "배달", "당근"],
+  },{
+    
+    title: "네~",
+    name: "슈퍼톤AI - VoiceB",
+    tags: ["택배", "배달", "당근"],
+  },{
+    
+    title: "아니요~",
+    name: "슈퍼톤AI - VoiceB",
+    tags: ["택배", "배달", "당근"],
+  }
+];
+
   const { isLoading, stopLoading } = useLoading(true); 
 
   useEffect(() => {
@@ -57,7 +105,14 @@ export default function AudioPage() {
       :
       <Container>
         <Header />
-        <AudioItem />
+        {audioMockData.map((item, index) => (
+        <AudioItem
+          key={index}
+          title={item.title}
+          name={item.name}
+          tags={item.tags}
+        />
+      ))}
         <FooterWrapper>
           <Footer />
         </FooterWrapper>

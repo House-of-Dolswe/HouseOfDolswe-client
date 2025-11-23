@@ -67,7 +67,7 @@ export default function AudioItem() {
 
   const toggleBookmark = () => {
   setIsBookmarked(prev => !prev);
-};
+  };
 
   return (
     <Container>

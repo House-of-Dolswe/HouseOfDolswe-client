@@ -1,8 +1,11 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import AlarmOffIcon from '../../public/alarmOffIcon.svg';
+import AlarmOnIcon from '../../public/alarmOnIcon.svg';
+import AudioOffIcon from '../../public/audioOffIcon.svg';
 import AudioOnIcon from '../../public/audioOnIcon.svg';
 import SettingOffIcon from '../../public/settingOffIcon.svg';
+import SettingOnIcon from '../../public/settingOnIcon.svg';
 
 const Container = styled.div`
   width: 100%;
@@ -31,30 +34,49 @@ const PageIcon = styled.img`
 
 `;
 
-const PageTitle = styled.p`
-  color: #9E9E9E;
+const PageTitle = styled.p<PageTitleProps>`
+  color: ${(props) => (props.active ? "#222222" : "#9E9E9E")};
   font-size: 1.2vh;
   margin: 0.5vh;
 `;
 
+interface PageTitleProps {
+  active: boolean;
+}
+
 
 export default function Footer() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const activeMenu = 
+    location.pathname.includes("call") ? "call" :
+    location.pathname.includes("audio") ? "audio" :
+    location.pathname.includes("settings") ? "settings" :
+    "audio";
 
   return (
     <Container>
-        <IconWrapper onClick={() => navigate("/notice")}>
-            <PageIcon src={AlarmOffIcon} />
-            <PageTitle>공지사항</PageTitle>
-        </IconWrapper>
-        <IconWrapper onClick={() => navigate("/audio")}>
-            <PageIcon src={AudioOnIcon} />
-            <PageTitle>오디오</PageTitle>
-        </IconWrapper>
-        <IconWrapper onClick={() => navigate("/settings")}>
-            <PageIcon src={SettingOffIcon} />
-            <PageTitle>설정</PageTitle>
-        </IconWrapper>
+      <IconWrapper 
+        onClick={() => navigate("/call")}
+      >
+        <PageIcon src={activeMenu === "call" ? AlarmOnIcon : AlarmOffIcon} />
+        <PageTitle active={activeMenu === "call"}>돌쇠의 전화</PageTitle>
+      </IconWrapper>
+
+      <IconWrapper 
+        onClick={() => navigate("/audio")}
+      >
+        <PageIcon src={activeMenu === "audio" ? AudioOnIcon : AudioOffIcon} />
+        <PageTitle active={activeMenu === "audio"}>오디오</PageTitle>
+      </IconWrapper>
+
+      <IconWrapper 
+        onClick={() => navigate("/settings")}
+      >
+        <PageIcon src={activeMenu === "settings" ? SettingOnIcon : SettingOffIcon} />
+        <PageTitle active={activeMenu === "settings"}>설정</PageTitle>
+      </IconWrapper>
     </Container>
   );
 }

@@ -4,11 +4,18 @@ import ProfileImg from '../../public/profileImg.svg';
 import Bookmark from '../../public/bookmark.svg';
 import BookmarkOn from '../../public/bookmarkFill.svg'; 
 
-const Container = styled.div`
+const Container = styled.div<{ selected: boolean; disabled: boolean }>`
   width: 100%;
   height: 9.5vh;
   display: flex;
-  border-bottom: 0.7vw solid #F2F2F2;
+  border-bottom: 0.7vw solid ${(props) => 
+    props.selected ? "Transparent" : 
+    props.disabled ? "#F2F2F2" :
+    "#F2F2F2"};
+  background-color: ${(props) => 
+    props.selected ? "white" : 
+    props.disabled ? "#F2F2F2" :
+    "white"};
 `
 const ProfileBox = styled.img`
   width: 13.5vw;
@@ -24,10 +31,14 @@ const TextWrapper = styled.div`
   gap: 0.3vh;
   margin-left: 5vw;
 `
-const LineBox = styled.p`
+const LineBox = styled.p<{ selected: boolean; disabled: boolean }>`
   font-weight: bold;
   font-size: 4vw;
   margin: 0;
+  color: ${(props) => 
+    props.selected ? "#000000" : 
+    props.disabled ? "#8E8E93" :
+    "#000000"};
 `
 const DetailWrapper = styled.div`
   display: flex; 
@@ -58,14 +69,23 @@ const BookmarkIcon = styled.button`
   height: auto;
   outline: none;
 ` 
+const PlayBar = styled.div`
+  width: 100%;
+  height: 1.5vw;
+  background-color: #D9D9D9;
+`;
+
 
 interface AudioItemProps {
   title: string;
   name: string;
   tags: string[];
+  selected: boolean;
+  disabled: boolean;
+  onSelect: () => void;
 }
 
-export default function AudioItem({ title, name, tags }: AudioItemProps) {
+export default function AudioItem({ title, name, tags, selected, disabled, onSelect }: AudioItemProps) {
 
   const [isBookmarked, setIsBookmarked] = useState(false);
 
@@ -74,7 +94,8 @@ export default function AudioItem({ title, name, tags }: AudioItemProps) {
   };
 
   return (
-    <Container>
+    <>
+      <Container selected={selected} disabled={disabled} onClick={onSelect}>
         <ProfileBox src={ProfileImg} />
         <TextWrapper>
             <LineBox>{title}</LineBox>
@@ -93,6 +114,8 @@ export default function AudioItem({ title, name, tags }: AudioItemProps) {
             />
           </BookmarkIcon>
         </BookmarkWrapper>
-    </Container>
+      </Container>
+      {selected && <PlayBar />}
+    </>
   );
 }

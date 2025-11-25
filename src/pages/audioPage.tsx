@@ -82,6 +82,13 @@ export default function AudioPage() {
     item.title.includes(search) || item.name.includes(search) || item.tags.some(tag => tag.includes(search))
   );
 
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+  const handleSelect = (index: number) => {
+    setSelectedIndex(index);
+  };
+
+
   const { isLoading, stopLoading } = useLoading(true); 
 
   useEffect(() => {
@@ -116,6 +123,9 @@ export default function AudioPage() {
               title={item.title}
               name={item.name}
               tags={item.tags}
+              selected={selectedIndex === index}
+              disabled={selectedIndex !== null && selectedIndex !== index}
+              onSelect={() => handleSelect(index)}
             />
           ))}
           <Footer />

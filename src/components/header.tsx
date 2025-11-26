@@ -1,5 +1,5 @@
-import { useNavigate } from 'react-router-dom';
-import { useHeart } from '../context/heartContext';
+import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import styled from 'styled-components';
 import HeaderLogo from '../../public/headerLogo.svg';
 import Heart from '../../public/heart.svg';
@@ -33,19 +33,22 @@ const HeartIcon = styled.button`
 
 export default function Header() {
 
-  const { isClicked, toggleClick } = useHeart();
+  const location = useLocation();
   const navigate = useNavigate();
+
+  const isFilled = location.pathname === "/thanks";
+
+  const handleClick = () => {
+    navigate("/thanks");
+  };
 
 
   return (
     <Container>
       <LogoImg src={HeaderLogo} />
-        <HeartIcon onClick={() => {
-          toggleClick();
-          navigate("/thanks");
-        }}>
+        <HeartIcon onClick={handleClick}>
           <img 
-              src={isClicked ? FillHeart : Heart}
+              src={isFilled ? FillHeart : Heart}
               style={{ width: "6vw" }}
             />
         </HeartIcon>

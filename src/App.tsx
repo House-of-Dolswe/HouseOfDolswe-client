@@ -11,7 +11,6 @@ import Settings from "./pages/settings";
 
 function App() {
   return (
-    <HeartProvider>
       <BrowserRouter>
       <Routes>
         <Route path="/" element={<GuestHome />} />
@@ -23,7 +22,6 @@ function App() {
         <Route path="/thanks" element={<ThanksTo />} />
       </Routes>
       </BrowserRouter>
-    </HeartProvider>
   );
 }
 

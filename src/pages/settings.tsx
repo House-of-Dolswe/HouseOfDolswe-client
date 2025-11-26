@@ -1,17 +1,12 @@
 import Footer from "../components/footer";
-import styled from "styled-components";
-
-const FooterWrapper = styled.div`
-  margin-top: auto;
-`;
+import Header from "../components/header";
 
 export default function Settings() {
   return (
     <>
+      <Header />
        설정 페이지
-       <FooterWrapper>
-         <Footer />
-       </FooterWrapper>
+       <Footer />
     </>
   );
 }

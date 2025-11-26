@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HeartProvider } from "./context/heartContext";
 import Home from "./pages/home";
 import AudioPage from "./pages/audioPage";
 import GuestHome from "./pages/guestHome";
@@ -10,7 +11,8 @@ import Settings from "./pages/settings";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HeartProvider>
+      <BrowserRouter>
       <Routes>
         <Route path="/" element={<GuestHome />} />
         <Route path="/audio" element={<AudioPage />} />
@@ -20,7 +22,8 @@ function App() {
         <Route path="/settings" element={<Settings />} />
         <Route path="/thanks" element={<ThanksTo />} />
       </Routes>
-    </BrowserRouter>
+      </BrowserRouter>
+    </HeartProvider>
   );
 }
 

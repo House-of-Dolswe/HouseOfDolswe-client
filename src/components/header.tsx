@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useHeart } from '../context/heartContext';
 import styled from 'styled-components';
 import HeaderLogo from '../../public/headerLogo.svg';
 import Heart from '../../public/heart.svg';
@@ -33,12 +33,9 @@ const HeartIcon = styled.button`
 
 export default function Header() {
 
-  const [isClicked, setIsClicked] = useState(false);
+  const { isClicked, toggleClick } = useHeart();
   const navigate = useNavigate();
 
-  const toggleClick = () => {
-  setIsClicked(prev => !prev);
-  };
 
   return (
     <Container>

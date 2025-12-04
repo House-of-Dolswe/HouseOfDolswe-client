@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import ProfileImg from '../../public/profileImg.svg';
 
 const Container = styled.div`
   width: 100%;
@@ -40,17 +39,18 @@ const ContentBox = styled.p`
 `
 
 interface ThanksItemProps {
+  profileImg: string;
   name: string;
   content: string;
+  onClick?: () => void;
 }
 
-export default function ThanksItem({ name, content }: ThanksItemProps) {
-
+export default function ThanksToItem({ profileImg, name, content, onClick }: ThanksItemProps) {
 
   return (
     <>
-      <Container>
-        <ProfileBox src={ProfileImg} />
+      <Container onClick={onClick}>
+        <ProfileBox src={profileImg} />
         <TextWrapper>
             <NameBox>{name}</NameBox>
             <DetailWrapper>

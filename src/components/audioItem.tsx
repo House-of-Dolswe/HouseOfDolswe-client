@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ProfileImg from '../../public/profileImg.svg';
+import ProfileImg from '../../public/profileImg1.svg';
 import Bookmark from '../../public/bookmark.svg';
 import BookmarkOn from '../../public/bookmarkFill.svg'; 
 

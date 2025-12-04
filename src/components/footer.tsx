@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
-import AlarmOffIcon from '../../public/alarmOffIcon.svg';
-import AlarmOnIcon from '../../public/alarmOnIcon.svg';
+import PhoneOffIcon from '../../public/phoneOffIcon.svg';
+import PhoneOnIcon from '../../public/phoneOnIcon.svg';
 import AudioOffIcon from '../../public/audioOffIcon.svg';
 import AudioOnIcon from '../../public/audioOnIcon.svg';
 import SettingOffIcon from '../../public/settingOffIcon.svg';
@@ -60,7 +60,7 @@ export default function Footer() {
       <IconWrapper 
         onClick={() => navigate("/call")}
       >
-        <PageIcon src={activeMenu === "call" ? AlarmOnIcon : AlarmOffIcon} />
+        <PageIcon src={activeMenu === "call" ? PhoneOnIcon : PhoneOffIcon} />
         <PageTitle active={activeMenu === "call"}>돌쇠의 전화</PageTitle>
       </IconWrapper>
 

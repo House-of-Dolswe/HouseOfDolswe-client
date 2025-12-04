@@ -1,39 +1,33 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/footer";
 import Header from "../components/header";
 import styled from "styled-components";
-import SpeakerOnIcon from "../../public/speakerOnIcon.svg";
-import SpeakerOffIcon from "../../public/speakerOffIcon.svg";
 import MoveToIcon from "../../public/MoveToIcon.svg";
 
-export default function Settings() {
+export default function Account() {
   const navigate = useNavigate();
-  const [isClicked, setIsClicked] = useState(false);
-
-  const handleToggle = () => {
-    setIsClicked((prev) => !prev);
-  };
 
   return (
     <>
       <Header />
        <Container>
-        <TitleBar>설정</TitleBar>
-        <TextBox>기본 오디오가 수화기 모드로 재생됩니다.</TextBox>
-        <MenuBox onClick={handleToggle}>
-          스피커 모드
-          <SpeakerButton src={isClicked ? SpeakerOnIcon : SpeakerOffIcon} />
-        </MenuBox>
+        <TitleBar>계정 관리</TitleBar>
         <MenuBox>
-          계정 관리
-          <MoveToButton src={MoveToIcon} onClick={() => navigate("/account")} />
-        </MenuBox>
-        <MenuBox>
-          서비스 개선에 기여하기
+          로그아웃
           <MoveToButton src={MoveToIcon} />
         </MenuBox>
-        <MenuBox>버전 정보 1.0.0</MenuBox>
+        <MenuBox>
+          계정 탈퇴
+          <MoveToButton src={MoveToIcon} />
+        </MenuBox>
+        <MenuBox>
+          서비스 이용약관
+          <MoveToButton src={MoveToIcon} onClick={()=>navigate("/servicePolicy")}/>
+        </MenuBox>
+        <MenuBox>
+          개인정보처리방침
+          <MoveToButton src={MoveToIcon} onClick={()=>navigate("/dataPolicy")}/>
+        </MenuBox>
        </Container>
       <Footer />
     </>
@@ -54,14 +48,6 @@ const TitleBar = styled.div`
   padding: 2vw;
   margin-top: 1vh;
 `
-const TextBox = styled.p`
-  color: #9C9CA7;
-  font-size: 3.2vw;
-  padding: 2vw 4vh;
-  margin-top: 2vh;
-  margin-bottom: 0;
-  border-bottom: 0.2vh solid #F2F2F7;
-`
 const MenuBox = styled.div`
   display: flex;
   align-items: center;
@@ -71,11 +57,6 @@ const MenuBox = styled.div`
   padding: 2vw 4vh;
   margin: 0;
   border-bottom: 0.2vh solid #F2F2F7;
-`
-const SpeakerButton = styled.img`
-  width: 13vw;
-  position: absolute;
-  right: 8vw;
 `
 const MoveToButton = styled.img`
   width: 7vw;

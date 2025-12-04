@@ -7,6 +7,9 @@ import Onboarding from "./pages/onboarding";
 import Call from "./pages/call";
 import ThanksTo from "./pages/thanksTo";
 import Settings from "./pages/settings";
+import Account from "./pages/account";
+import ServicePolicy from "./pages/servicePolicy";
+import DataPolicy from "./pages/dataPolicy";
 
 
 function App() {
@@ -21,6 +24,9 @@ function App() {
         <Route path="/call" element={<Call />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/thanks" element={<ThanksTo />} />
+        <Route path="/account" element={<Account />} />
+        <Route path="/servicePolicy" element={<ServicePolicy />} />
+        <Route path="/dataPolicy" element={<DataPolicy />} />
       </Routes>
       </BrowserRouter>
   );

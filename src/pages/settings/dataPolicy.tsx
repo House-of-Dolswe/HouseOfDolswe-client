@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Footer from "../components/footer";
-import Header from "../components/header";
+import Footer from "../../components/footer";
+import Header from "../../components/header";
 
 export default function DataPolicy() {
 

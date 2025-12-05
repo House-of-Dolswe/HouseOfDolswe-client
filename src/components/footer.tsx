@@ -52,7 +52,7 @@ export default function Footer() {
   const activeMenu = 
     location.pathname.includes("call") ? "call" :
     location.pathname.includes("audio") ? "audio" :
-    location.pathname.includes("settings") ? "settings" :
+    location.pathname.startsWith("/settings") ? "settings" :
     "audio";
 
   return (

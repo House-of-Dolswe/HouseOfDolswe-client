@@ -6,10 +6,10 @@ import GuestHome from "./pages/guestHome";
 import Onboarding from "./pages/onboarding";
 import Call from "./pages/call";
 import ThanksTo from "./pages/thanksTo";
-import Settings from "./pages/settings";
-import Account from "./pages/account";
-import ServicePolicy from "./pages/servicePolicy";
-import DataPolicy from "./pages/dataPolicy";
+import Settings from "./pages/settings/settings";
+import Account from "./pages/settings/account";
+import ServicePolicy from "./pages/settings/servicePolicy";
+import DataPolicy from "./pages/settings/dataPolicy";
 
 
 function App() {
@@ -24,9 +24,9 @@ function App() {
         <Route path="/call" element={<Call />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/thanks" element={<ThanksTo />} />
-        <Route path="/account" element={<Account />} />
-        <Route path="/servicePolicy" element={<ServicePolicy />} />
-        <Route path="/dataPolicy" element={<DataPolicy />} />
+        <Route path="/settings/account" element={<Account />} />
+        <Route path="/settings/servicePolicy" element={<ServicePolicy />} />
+        <Route path="/settings/dataPolicy" element={<DataPolicy />} />
       </Routes>
       </BrowserRouter>
   );

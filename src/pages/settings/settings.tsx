@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Footer from "../components/footer";
-import Header from "../components/header";
+import Footer from "../../components/footer";
+import Header from "../../components/header";
 import styled from "styled-components";
-import SpeakerOnIcon from "../../public/speakerOnIcon.svg";
-import SpeakerOffIcon from "../../public/speakerOffIcon.svg";
-import MoveToIcon from "../../public/MoveToIcon.svg";
+import SpeakerOnIcon from "../../../public/speakerOnIcon.svg";
+import SpeakerOffIcon from "../../../public/speakerOffIcon.svg";
+import MoveToIcon from "../../../public/MoveToIcon.svg";
 
 export default function Settings() {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ export default function Settings() {
         </MenuBox>
         <MenuBox>
           계정 관리
-          <MoveToButton src={MoveToIcon} onClick={() => navigate("/account")} />
+          <MoveToButton src={MoveToIcon} onClick={() => navigate("/settings/account")} />
         </MenuBox>
         <MenuBox>
           서비스 개선에 기여하기

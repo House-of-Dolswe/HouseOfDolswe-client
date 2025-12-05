@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import Footer from "../components/footer";
-import Header from "../components/header";
+import Footer from "../../components/footer";
+import Header from "../../components/header";
 import styled from "styled-components";
-import MoveToIcon from "../../public/MoveToIcon.svg";
+import MoveToIcon from "../../../public/moveToIcon.svg";
 
 export default function Account() {
   const navigate = useNavigate();
@@ -22,11 +22,11 @@ export default function Account() {
         </MenuBox>
         <MenuBox>
           서비스 이용약관
-          <MoveToButton src={MoveToIcon} onClick={()=>navigate("/servicePolicy")}/>
+          <MoveToButton src={MoveToIcon} onClick={()=>navigate("/settings/servicePolicy")}/>
         </MenuBox>
         <MenuBox>
           개인정보처리방침
-          <MoveToButton src={MoveToIcon} onClick={()=>navigate("/dataPolicy")}/>
+          <MoveToButton src={MoveToIcon} onClick={()=>navigate("/settings/dataPolicy")}/>
         </MenuBox>
        </Container>
       <Footer />

@@ -4,15 +4,16 @@ import Footer from "../../components/footer";
 import Header from "../../components/header";
 import styled from "styled-components";
 import MoveToIcon from "../../../public/moveToIcon.svg";
+import LogOutModal from "../../components/logOutModal";
 import SignOutModal from "../../components/signOutModal";
 
 export default function Account() {
   const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<"logout" | "signout" | null>(null);
 
-  const openModal = () => {  
-    setIsModalOpen(true);
-  };
+  const openLogOutModal = () => setModalType("logout");
+  const openSignOutModal = () => setModalType("signout");
+  const closeModal = () => setModalType(null);
 
   return (
     <>
@@ -21,13 +22,16 @@ export default function Account() {
         <TitleBar>계정 관리</TitleBar>
         <MenuBox>
           로그아웃
-          <MoveToButton src={MoveToIcon} />
+          <MoveToButton 
+          src={MoveToIcon}
+          onClick={() => openLogOutModal()}
+          />
         </MenuBox>
         <MenuBox>
           계정 탈퇴
           <MoveToButton 
           src={MoveToIcon}
-          onClick={() => openModal()}
+          onClick={openSignOutModal}
           />
         </MenuBox>
         <MenuBox>
@@ -39,9 +43,13 @@ export default function Account() {
           <MoveToButton src={MoveToIcon} onClick={()=>navigate("/settings/dataPolicy")}/>
         </MenuBox>
        </Container>
-       {isModalOpen && (
-        <SignOutModal onClose={() => setIsModalOpen(false)}/>
-        )}
+      {modalType === "signout" && (
+        <SignOutModal onClose={closeModal} />
+      )}
+
+      {modalType === "logout" && (
+        <LogOutModal onClose={closeModal} />
+      )}
       <Footer />
     </>
   );

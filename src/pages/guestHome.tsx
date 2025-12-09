@@ -1,37 +1,31 @@
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import LogoWhite from "../../public/logoWhite.svg";
 import KakaoIcon from "../../public/kakaoIcon.svg";
 
 
-export default function Home() {
-  const navigate = useNavigate();
+export default function GuestHome() {
+
+  console.log("GuestHome 렌더됨");
 
   const loginWithKakao = () => {
-    if (!window.Kakao || !window.Kakao.Auth) return;
-    window.Kakao.Auth.setAccessToken(null);
+    console.log("버튼 클릭됨!"); 
+    const REST_API_KEY = import.meta.env.VITE_KAKAO_CLIENT_ID;
+    const REDIRECT_URI = `${import.meta.env.VITE_FRONTEND_BASE_URL}/login/oauth`; 
+    // ← 카카오 설정에서 등록한 redirect URI와 같아야 함!
 
-  window.Kakao.Auth.login({
-    throughTalk: false,           // 카톡 자동 로그인 방지
-    persistAccessToken: false,    // 브라우저 저장 방지 -> 매번 팝업 창 뜸
-    scope: "profile_nickname",
-    success: (authObj: any) => {
-      console.log("카카오 로그인 성공:", authObj);
-      // access_token 여기서 바로 사용 가능
-      window.Kakao.API.request({
-        url: "/v2/user/me",
-          success: (res: any) => {
-            console.log("유저 정보:", res);
-            navigate("/onboarding");
-          },
-        fail: (err: any) => console.error(err),
-      });
-    },
-    fail: (err: any) => {
-      console.error("카카오 로그인 실패:", err);
-    },
-  });
-};
+    const kakaoAuthUrl =
+    `https://kauth.kakao.com/oauth/authorize` +
+    `?response_type=code` +
+    `&client_id=${REST_API_KEY}` +
+    `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;
+
+    console.log("카카오 요청 URL:", kakaoAuthUrl);
+    window.location.href = kakaoAuthUrl;
+    console.log(`${import.meta.env.VITE_API_BASE_URL}/api/login/kakao`);
+    
+  };
+
+  
 
   return (
     <Container>
@@ -57,6 +51,7 @@ const Container = styled.div `
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  position: relative;
 `;
 
 const LogoWrapper = styled.div`
@@ -93,6 +88,7 @@ const LoginButton = styled.button`
   display: flex;
   justify-content: center;
   gap: 2vw;
+  z-index: 10;
 `;
 
 const KakaoImg = styled.img`

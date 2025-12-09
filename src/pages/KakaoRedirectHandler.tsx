@@ -1,59 +1,33 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const KakaoRedirectHandler = () => {
+export default function KakaoRedirectHandler() {
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const params = new URL(window.location.href).searchParams;
-    const code = params.get("code");
+  const code = new URL(window.location.href).searchParams.get("code");
 
-    const grant_type = "authorization_code";
-    const client_id = import.meta.env.VITE_KAKAO_CLIENT_ID;
-    const redirect_uri = `${import.meta.env.VITE_FRONTEND_BASE_URL}/login/oauth`;
+  if (!code) return;
 
-    axios
-      .post(
-        `https://kauth.kakao.com/oauth/token`,
-        null,
-        {
-          params: {
-            grant_type,
-            client_id,
-            redirect_uri,
-            code,
-          },
-          headers: {
-            "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res);
+  console.log("code:", code);
 
-        // Kakao SDK 접근
-        const { Kakao } = window;
-        Kakao.Auth.setAccessToken(res.data.access_token);
+  axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/login/kakao`, {
+    params: { code },
+  })
+  .then((res) => {
+    console.log("로그인 성공:", res.data);
 
-        Kakao.API.request({
-          url: "/v2/user/me",
-          success: (response: any) => {
-            console.log(response);
-          },
-          fail: (error: any) => {
-            console.error(error);
-          },
-        });
+    const { accessToken, refreshToken, onboardingRequired } = res.data.result;
 
-        // 백엔드 로그인 API
-        // api.post("/api/user/account/login/kakao", {
-        //   accessToken: res.data.access_token,
-        // }).then((res) => {
-        //   console.log(res);
-        // });
-      });
-  }, []);
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("refreshToken", refreshToken);
 
-  return <div>kakao login 완료</div>;
-};
+    if (onboardingRequired) navigate("/onboarding");
+    else navigate("/home");
+  })
+  .catch((err) => console.error("로그인 실패:", err));
+}, []);
 
-export default KakaoRedirectHandler;
+  return <div>로그인 처리중...</div>;
+}

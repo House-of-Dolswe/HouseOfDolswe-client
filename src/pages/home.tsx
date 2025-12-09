@@ -3,25 +3,6 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import LogoWhite from "../../public/logoWhite.svg";
 
-const Container = styled.div `
-  background: linear-gradient(#626262, #000000);
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;
-
-const LogoWrapper = styled.div`
-  
-`;
-
-const LogoImg = styled.img`
-  width: 50vw;
-  height: 50vh;
-`;
-
-
 export default function Home() {
   const navigate = useNavigate();
   
@@ -44,3 +25,20 @@ export default function Home() {
   );
 }
 
+const Container = styled.div `
+  background: linear-gradient(#626262, #000000);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const LogoWrapper = styled.div`
+  
+`;
+
+const LogoImg = styled.img`
+  width: 50vw;
+  height: 50vh;
+`;

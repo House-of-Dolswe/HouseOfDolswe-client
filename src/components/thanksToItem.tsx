@@ -1,5 +1,30 @@
 import styled from 'styled-components';
 
+interface ThanksItemProps {
+  profileImg: string;
+  name: string;
+  content: string;
+  onClick?: () => void;
+}
+
+export default function ThanksToItem({ profileImg, name, content, onClick }: ThanksItemProps) {
+
+  return (
+    <>
+      <Container onClick={onClick}>
+        <ProfileBox src={profileImg} />
+        <TextWrapper>
+            <NameBox>{name}</NameBox>
+            <DetailWrapper>
+              <ContentBox>{content}</ContentBox>
+            </DetailWrapper>
+        </TextWrapper>
+      </Container>
+    </>
+  );
+}
+
+
 const Container = styled.div`
   width: 100%;
   display: flex;
@@ -37,27 +62,3 @@ const ContentBox = styled.p`
   font-size: 3.2vw;
   margin: 0;
 `
-
-interface ThanksItemProps {
-  profileImg: string;
-  name: string;
-  content: string;
-  onClick?: () => void;
-}
-
-export default function ThanksToItem({ profileImg, name, content, onClick }: ThanksItemProps) {
-
-  return (
-    <>
-      <Container onClick={onClick}>
-        <ProfileBox src={profileImg} />
-        <TextWrapper>
-            <NameBox>{name}</NameBox>
-            <DetailWrapper>
-              <ContentBox>{content}</ContentBox>
-            </DetailWrapper>
-        </TextWrapper>
-      </Container>
-    </>
-  );
-}

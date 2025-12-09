@@ -9,20 +9,6 @@ import ProfileImg2 from "../../public/profileImg2.svg";
 import ProfileImg3 from "../../public/profileImg3.svg";
 
 
-const TitleWrapper = styled.div`
-  width: 100%;
-  height: 3.5vh;
-  background-color: #000000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const TitleText = styled.p`
-  color: white;
-  font-size: 4vw;
-`
-
 interface ThanksData {
   profileImg: string;
   name: string;
@@ -103,3 +89,18 @@ export default function ThanksTo() {
     </>
   );
 }
+
+
+const TitleWrapper = styled.div`
+  width: 100%;
+  height: 3.5vh;
+  background-color: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const TitleText = styled.p`
+  color: white;
+  font-size: 4vw;
+`

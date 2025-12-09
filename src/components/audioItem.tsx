@@ -6,82 +6,6 @@ import BookmarkOn from '../../public/bookmarkFill.svg';
 import PlayButton from '../../public/playButton.svg';
 import AudioScript from './audioScript';
 
-const Container = styled.div<{ selected: boolean; disabled: boolean }>`
-  width: 100%;
-  height: 9.5vh;
-  display: flex;
-  border-bottom: 0.7vw solid ${(props) => 
-    props.selected ? "Transparent" : 
-    props.disabled ? "#F2F2F2" :
-    "#F2F2F2"};
-  background-color: ${(props) => 
-    props.selected ? "white" : 
-    props.disabled ? "#F2F2F2" :
-    "white"};
-`
-const ProfileBox = styled.img`
-  width: 13.5vw;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  margin-left: 6vw;
-`
-const TextWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.3vh;
-  margin-left: 4vw;
-`
-const LineBox = styled.p<{ selected: boolean; disabled: boolean }>`
-  font-weight: bold;
-  font-size: 3.8vw;
-  margin: 0;
-  color: ${(props) => 
-    props.selected ? "#000000" : 
-    props.disabled ? "#8E8E93" :
-    "#000000"};
-`
-const DetailWrapper = styled.div`
-  display: flex; 
-  flex-direction: row;
-`
-const NameBox = styled.p`
-  color: #A304FF;
-  font-size: 3.2vw;
-  margin: 0;
-`
-const TagBox = styled.p`
-  color: #8E8E93;
-  font-size: 3.2vw;
-  margin: 0;
-  margin-left: 1.2vw;
-`
-const ButtonContainer = styled.div`
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-`
-const BookmarkWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  margin-right: 4vw;
-`
-const BookmarkIcon = styled.button<{ isDimmed?: boolean }>`
-  background: none;
-  border: none;
-  padding: 0;
-  width: 6vw;
-  height: auto;
-  outline: none;
-  opacity: ${({ isDimmed }) => (isDimmed ? 0.4 : 1)};
-` 
-const PlayBar = styled.div`
-  width: 100%;
-  height: 1vw;
-  background-color: #D9D9D9;
-`;
-
 
 interface AudioItemProps {
   id: number,
@@ -169,3 +93,79 @@ export default function AudioItem({
     </>
   );
 }
+
+const Container = styled.div<{ selected: boolean; disabled: boolean }>`
+  width: 100%;
+  height: 9.5vh;
+  display: flex;
+  border-bottom: 0.7vw solid ${(props) => 
+    props.selected ? "Transparent" : 
+    props.disabled ? "#F2F2F2" :
+    "#F2F2F2"};
+  background-color: ${(props) => 
+    props.selected ? "white" : 
+    props.disabled ? "#F2F2F2" :
+    "white"};
+`
+const ProfileBox = styled.img`
+  width: 13.5vw;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  margin-left: 6vw;
+`
+const TextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.3vh;
+  margin-left: 4vw;
+`
+const LineBox = styled.p<{ selected: boolean; disabled: boolean }>`
+  font-weight: bold;
+  font-size: 3.8vw;
+  margin: 0;
+  color: ${(props) => 
+    props.selected ? "#000000" : 
+    props.disabled ? "#8E8E93" :
+    "#000000"};
+`
+const DetailWrapper = styled.div`
+  display: flex; 
+  flex-direction: row;
+`
+const NameBox = styled.p`
+  color: #A304FF;
+  font-size: 3.2vw;
+  margin: 0;
+`
+const TagBox = styled.p`
+  color: #8E8E93;
+  font-size: 3.2vw;
+  margin: 0;
+  margin-left: 1.2vw;
+`
+const ButtonContainer = styled.div`
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+`
+const BookmarkWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 4vw;
+`
+const BookmarkIcon = styled.button<{ isDimmed?: boolean }>`
+  background: none;
+  border: none;
+  padding: 0;
+  width: 6vw;
+  height: auto;
+  outline: none;
+  opacity: ${({ isDimmed }) => (isDimmed ? 0.4 : 1)};
+` 
+const PlayBar = styled.div`
+  width: 100%;
+  height: 1vw;
+  background-color: #D9D9D9;
+`;

@@ -8,41 +8,6 @@ import SearchBar from "../components/searchBar";
 import Spinner from "../../public/loadingSpinner.gif";
 
 
-const LoadingContainer = styled.div `
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;
-
-const Container = styled.div `
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-`;
-
-const SpinnerImg = styled.img`
-  width: 10vw;
-`;
-
-const CategoryWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 7vw;
-  height: 6vh;
-`;
-
-const CategoryItem = styled.p<{ active: boolean }>`
-  background-color: #ffffff;
-  color: ${(props) => (props.active ? "#000000" : "#616161")};
-  font-size: 4vw;
-  font-weight: bold;
-  padding-bottom: 3.8vh;
-  border-bottom: 0.6vh solid ${(props) => (props.active ? "#000000" : "none")};
-  z-index: 100;
-`;
-
 interface AudioData {
   id: number,
   title: string;
@@ -219,3 +184,39 @@ export default function AudioPage() {
     </>
   );
 }
+
+
+const LoadingContainer = styled.div `
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const Container = styled.div `
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+`;
+
+const SpinnerImg = styled.img`
+  width: 10vw;
+`;
+
+const CategoryWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 7vw;
+  height: 6vh;
+`;
+
+const CategoryItem = styled.p<{ active: boolean }>`
+  background-color: #ffffff;
+  color: ${(props) => (props.active ? "#000000" : "#616161")};
+  font-size: 4vw;
+  font-weight: bold;
+  padding-bottom: 3.8vh;
+  border-bottom: 0.6vh solid ${(props) => (props.active ? "#000000" : "none")};
+  z-index: 100;
+`;

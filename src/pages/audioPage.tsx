@@ -48,6 +48,7 @@ interface AudioData {
   title: string;
   name: string;
   tags: string[];
+  script: string;
 }
 
 export default function AudioPage() {
@@ -57,40 +58,47 @@ export default function AudioPage() {
     title: "누구세요?",
     name: "장춘배",
     tags: ["택배", "배달", "당근"],
+    script: "",
   },
   {
     id:2,
     title: "네~ 문 앞에 두고 가세요",
     name: "장춘배",
     tags: ["택배", "배달", "당근"],
+    script: "",
   },
   {
     id:3,
     title: "문 앞에 있는 거 가져가시면 돼요",
     name: "김OO",
     tags: ["택배", "배달", "당근"],
-  },
+    script: "",
+    },
   {
     id:4,
     title: "제가 지금 씻고 있어서요~",
     name: "김OO",
     tags: ["택배", "배달", "당근"],
+    script: "",
   },
   {
     id:5,
     title: "지금 못 나가요",
     name: "슈퍼톤AI - VoiceA",
     tags: ["택시", "골목길", "당근"],
+    script: "어 어디야.<br />나: 나 택시 탔어<br /> 아 알겠어 거의 도착하면 카톡한번 줘 내려가있을게<br />나: 그래 알겠어<br />어 조심해서 와<br />나: 응 카톡할게~"
   },{
     id:6,
     title: "네~",
     name: "슈퍼톤AI - VoiceB",
     tags: ["택시", "골목길", "당근"],
+    script: "어 어디야.<br />나: 나 택시 탔어<br /> 아 알겠어 거의 도착하면 카톡한번 줘 내려가있을게<br />나: 그래 알겠어<br />어 조심해서 와<br />나: 응 카톡할게~"
   },{
     id:7,
     title: "아니요~",
     name: "슈퍼톤AI - VoiceB",
     tags: ["택시", "배달", "당근"],
+    script: "어 어디야.<br />나: 나 택시 탔어<br /> 아 알겠어 거의 도착하면 카톡한번 줘 내려가있을게<br />나: 그래 알겠어<br />어 조심해서 와<br />나: 응 카톡할게~"
   }
 ];
 
@@ -199,8 +207,10 @@ export default function AudioPage() {
     selected={selectedIndex === item.id}
     disabled={selectedIndex !== null && selectedIndex !== item.id}
     onSelect={() => handleSelect(item.id)}
+    category={category}
     onToggleBookmark={handleToggleBookmark}
     isBookmarked={bookmarks.includes(item.id)}
+    script={item.script}
   />
 ))}
 

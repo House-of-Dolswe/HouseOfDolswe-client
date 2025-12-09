@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import ProfileImg from '../../public/profileImg1.svg';
 import Bookmark from '../../public/bookmark.svg';
 import BookmarkOn from '../../public/bookmarkFill.svg'; 
 import PlayButton from '../../public/playButton.svg';
+import AudioScript from './audioScript';
 
 const Container = styled.div<{ selected: boolean; disabled: boolean }>`
   width: 100%;
@@ -76,7 +78,7 @@ const BookmarkIcon = styled.button<{ isDimmed?: boolean }>`
 ` 
 const PlayBar = styled.div`
   width: 100%;
-  height: 1.5vw;
+  height: 1vw;
   background-color: #D9D9D9;
 `;
 
@@ -89,9 +91,11 @@ interface AudioItemProps {
   selected: boolean;
   disabled: boolean;
   isInitialLoad: boolean;
+  category: string;
   onSelect: () => void;
   onToggleBookmark: (id: number) => void;
   isBookmarked: boolean;
+  script: string;
 }
 
 export default function AudioItem({ 
@@ -102,11 +106,20 @@ export default function AudioItem({
   selected,
   disabled,
   isInitialLoad,
+  category,
   onSelect,
   onToggleBookmark,
-  isBookmarked }: AudioItemProps) {
+  isBookmarked,
+  script }: AudioItemProps) {
 
+  const [playClickCount, setPlayClickCount] = useState(0);
   const isDimmed = !isInitialLoad && !selected;
+  const isScriptOpen = category === "귀가(택시,골목길)";
+
+  const handlePlayClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation(); 
+    setPlayClickCount(prev => prev + 1);
+  };
 
   return (
     <>
@@ -123,7 +136,7 @@ export default function AudioItem({
         </TextWrapper>
         <ButtonContainer>
          <BookmarkWrapper>
-          <BookmarkIcon isDimmed={isDimmed} disabled={!selected}>
+          <BookmarkIcon isDimmed={isDimmed} disabled={!selected} onClick={handlePlayClick}>
             <img 
               src={PlayButton}
               style={{ width: "4vw" }}
@@ -147,6 +160,12 @@ export default function AudioItem({
         </ButtonContainer>
       </Container>
       {selected && <PlayBar />}
+      {selected && isScriptOpen && (
+        <AudioScript
+          script={script}
+          playClickCount={playClickCount}
+        />
+      )}
     </>
   );
 }

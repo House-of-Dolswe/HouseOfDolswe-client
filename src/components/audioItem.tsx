@@ -20,6 +20,10 @@ interface AudioItemProps {
   onToggleBookmark: (id: number) => void;
   isBookmarked: boolean;
   script: string;
+  onPlayAudio: (id: number, url: string) => void;
+  audioUrl: string;
+  isPlaying: boolean;
+  progress: number;
 }
 
 export default function AudioItem({ 
@@ -34,7 +38,10 @@ export default function AudioItem({
   onSelect,
   onToggleBookmark,
   isBookmarked,
-  script }: AudioItemProps) {
+  script,
+  onPlayAudio,
+  audioUrl,
+  progress }: AudioItemProps) {
 
   const [playClickCount, setPlayClickCount] = useState(0);
   const isDimmed = !isInitialLoad && !selected;
@@ -43,6 +50,7 @@ export default function AudioItem({
   const handlePlayClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation(); 
     setPlayClickCount(prev => prev + 1);
+    onPlayAudio(id, audioUrl);
   };
 
   return (
@@ -83,7 +91,7 @@ export default function AudioItem({
          </BookmarkWrapper>
         </ButtonContainer>
       </Container>
-      {selected && <PlayBar />}
+      {selected && <PlayBar progress={progress} />}
       {selected && isScriptOpen && (
         <AudioScript
           script={script}
@@ -164,8 +172,21 @@ const BookmarkIcon = styled.button<{ isDimmed?: boolean }>`
   outline: none;
   opacity: ${({ isDimmed }) => (isDimmed ? 0.4 : 1)};
 ` 
-const PlayBar = styled.div`
+const PlayBar = styled.div<{ progress: number }>`
   width: 100%;
   height: 1vw;
   background-color: #D9D9D9;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: ${({ progress }) => progress}%;
+    background-color: #A304FF; 
+    transition: width 0.1s linear;
+  }
 `;

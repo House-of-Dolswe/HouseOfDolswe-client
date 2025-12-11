@@ -14,6 +14,7 @@ interface AudioData {
   name: string;
   tags: string[];
   script: string;
+  audioUrl: string;
 }
 
 export default function AudioPage() {
@@ -24,6 +25,7 @@ export default function AudioPage() {
     name: "장춘배",
     tags: ["택배", "배달", "당근"],
     script: "",
+    audioUrl: "public/audio/laughSound.mp3"
   },
   {
     id:2,
@@ -31,6 +33,7 @@ export default function AudioPage() {
     name: "장춘배",
     tags: ["택배", "배달", "당근"],
     script: "",
+    audioUrl: "public/audio/laughSound.mp3"
   },
   {
     id:3,
@@ -38,6 +41,7 @@ export default function AudioPage() {
     name: "김OO",
     tags: ["택배", "배달", "당근"],
     script: "",
+    audioUrl: "public/audio/laughSound.mp3"
     },
   {
     id:4,
@@ -45,29 +49,34 @@ export default function AudioPage() {
     name: "김OO",
     tags: ["택배", "배달", "당근"],
     script: "",
+    audioUrl: "public/audio/laughSound.mp3"
   },
   {
     id:5,
     title: "지금 못 나가요",
     name: "슈퍼톤AI - VoiceA",
     tags: ["택시", "골목길", "당근"],
-    script: "어 어디야.<br />나: 나 택시 탔어<br /> 아 알겠어 거의 도착하면 카톡한번 줘 내려가있을게<br />나: 그래 알겠어<br />어 조심해서 와<br />나: 응 카톡할게~"
+    script: "어 어디야.<br />나: 나 택시 탔어<br /> 아 알겠어 거의 도착하면 카톡한번 줘 내려가있을게<br />나: 그래 알겠어<br />어 조심해서 와<br />나: 응 카톡할게~",
+    audioUrl: "public/audio/test.mp3"
   },{
     id:6,
     title: "네~",
     name: "슈퍼톤AI - VoiceB",
     tags: ["택시", "골목길", "당근"],
-    script: "어 어디야.<br />나: 나 택시 탔어<br /> 아 알겠어 거의 도착하면 카톡한번 줘 내려가있을게<br />나: 그래 알겠어<br />어 조심해서 와<br />나: 응 카톡할게~"
+    script: "어 어디야.<br />나: 나 택시 탔어<br /> 아 알겠어 거의 도착하면 카톡한번 줘 내려가있을게<br />나: 그래 알겠어<br />어 조심해서 와<br />나: 응 카톡할게~",
+    audioUrl: "public/audio/test.mp3"
   },{
     id:7,
     title: "아니요~",
     name: "슈퍼톤AI - VoiceB",
     tags: ["택시", "배달", "당근"],
-    script: "어 어디야.<br />나: 나 택시 탔어<br /> 아 알겠어 거의 도착하면 카톡한번 줘 내려가있을게<br />나: 그래 알겠어<br />어 조심해서 와<br />나: 응 카톡할게~"
+    script: "어 어디야.<br />나: 나 택시 탔어<br /> 아 알겠어 거의 도착하면 카톡한번 줘 내려가있을게<br />나: 그래 알겠어<br />어 조심해서 와<br />나: 응 카톡할게~",
+    audioUrl: "public/audio/test.mp3"
   }
 ];
+  
 
-  const [search, setSearch] = useState("");
+// 카테고리 분류
   type CategoryType = "문 앞(택배,배달)" | "귀가(택시,골목길)" | "즐겨찾기";
   const [category, setCategory] = useState<CategoryType>("문 앞(택배,배달)");
 
@@ -75,17 +84,6 @@ export default function AudioPage() {
   const handleSelect = (index: number) => {
     setSelectedIndex(index);
   };
-
-
-  const [bookmarks, setBookmarks] = useState<number[]>([]);
-
-  const handleToggleBookmark = (id: number) => {
-  setBookmarks(prev =>
-    prev.includes(id)
-      ? prev.filter(b => b !== id) // 이미 있으면 제거
-      : [...prev, id]              // 없으면 추가
-  );
-};
 
   const categoryFiltered = audioMockData.filter((item) => {
   const has문앞 = item.tags.some(t => t.includes("택배") || t.includes("배달"));
@@ -99,6 +97,8 @@ export default function AudioPage() {
   });
 
 
+  // 검색
+  const [search, setSearch] = useState("");
   const filteredData = categoryFiltered.filter(
     (item) =>
       item.title.includes(search) ||
@@ -106,6 +106,56 @@ export default function AudioPage() {
       item.tags.some((tag) => tag.includes(search))
   );
 
+
+  // 즐겨찾기
+  const [bookmarks, setBookmarks] = useState<number[]>([]);
+
+  const handleToggleBookmark = (id: number) => {
+  setBookmarks(prev =>
+    prev.includes(id)
+      ? prev.filter(b => b !== id) // 이미 있으면 제거
+      : [...prev, id]              // 없으면 추가
+   );
+  };
+
+  // 오디오 파일
+  const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
+  const [currentAudioId, setCurrentAudioId] = useState<number | null>(null);
+  const [progress, setProgress] = useState(0);
+
+  const handlePlayAudio = (id: number, audioUrl: string) => {
+  // 1) 이미 같은 오디오가 재생 중일 때 → 토글 (재생/정지)
+  if (currentAudio && currentAudioId === id) {
+    if (currentAudio.paused) {
+      currentAudio.play();
+    } else {
+      currentAudio.pause();
+    }
+    return;
+  }
+
+  // 2) 다른 오디오가 재생 중이면 정지
+  if (currentAudio) {
+    currentAudio.pause();
+  }
+
+  // 3) 새로운 오디오 생성 후 재생
+  const newAudio = new Audio(audioUrl);
+  newAudio.ontimeupdate = () => {
+    if (!newAudio.duration) return;
+    setProgress((newAudio.currentTime / newAudio.duration) * 100);
+  };
+
+  // 오디오 끝나면 progress 초기화
+  newAudio.onended = () => {
+    setProgress(0);
+  };
+
+  newAudio.play();
+
+  setCurrentAudio(newAudio);
+  setCurrentAudioId(id);
+};
 
   const { isLoading, stopLoading } = useLoading(true); 
 
@@ -168,6 +218,8 @@ export default function AudioPage() {
     title={item.title}
     name={item.name}
     tags={item.tags}
+    script={item.script}
+    audioUrl={item.audioUrl}
     isInitialLoad={initialLoad}
     selected={selectedIndex === item.id}
     disabled={selectedIndex !== null && selectedIndex !== item.id}
@@ -175,7 +227,9 @@ export default function AudioPage() {
     category={category}
     onToggleBookmark={handleToggleBookmark}
     isBookmarked={bookmarks.includes(item.id)}
-    script={item.script}
+    isPlaying={currentAudioId === item.id && !currentAudio?.paused}
+    onPlayAudio={handlePlayAudio}
+    progress={currentAudioId === item.id ? progress : 0}
   />
 ))}
 

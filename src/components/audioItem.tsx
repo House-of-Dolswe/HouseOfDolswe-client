@@ -32,6 +32,11 @@ interface AudioItemProps {
   currentTime: number;
 }
 
+interface PlayBarProps{
+  progress: number;
+  isUser: boolean;
+}
+
 export default function AudioItem({ 
   id,
   title,
@@ -60,6 +65,12 @@ export default function AudioItem({
     onPlayAudio(id, audioUrl);
   };
 
+  const activeLine = script.find(
+  (line) => currentTime >= line.start && currentTime < line.end
+ );
+
+  const isUser = activeLine?.text.trim().startsWith("나:");
+  
   return (
     <>
       <Container selected={selected} disabled={disabled} onClick={onSelect}>
@@ -98,7 +109,14 @@ export default function AudioItem({
          </BookmarkWrapper>
         </ButtonContainer>
       </Container>
-      {selected && <PlayBar progress={progress} />}
+      
+      {selected && (
+      <PlayBar 
+        progress={progress} 
+        isUser={!!isUser}
+      />
+    )}
+
       {selected && isScriptOpen && (
         <AudioScript
           script={script}
@@ -180,7 +198,7 @@ const BookmarkIcon = styled.button<{ isDimmed?: boolean }>`
   outline: none;
   opacity: ${({ isDimmed }) => (isDimmed ? 0.4 : 1)};
 ` 
-const PlayBar = styled.div<{ progress: number }>`
+const PlayBar = styled.div<PlayBarProps>`
   width: 100%;
   height: 1vw;
   background-color: #D9D9D9;
@@ -194,7 +212,7 @@ const PlayBar = styled.div<{ progress: number }>`
     left: 0;
     height: 100%;
     width: ${({ progress }) => progress}%;
-    background-color: #A304FF; 
+    background-color: ${({ isUser }) => (isUser ? "#A304FF" : "#000")};
     transition: width 0.1s linear;
   }
 `;

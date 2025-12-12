@@ -31,15 +31,15 @@ export default function AudioScript({
             currentTime >= line.start && currentTime < line.end;
 
           const isUser = line.text.trim().startsWith("나:");
-          
+
           return (
             <Line
               key={idx}
               style={{
                 color: isActive 
-                ? "#000" 
-                : isUser
+                ? isUser
                 ? "#A304FF"
+                : "#000"
                 : "#8E8E93",
                 fontWeight: isActive ? "bold" : "normal",
               }}
@@ -54,7 +54,7 @@ export default function AudioScript({
 }
 
 const PlayText = styled.div`
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   color: #8E8E93;
   display: flex;
   justify-content: center;
@@ -62,11 +62,10 @@ const PlayText = styled.div`
 `;
 
 const ScriptBox = styled.div`
-  font-size: 0.7rem;
-  line-height: 1.5;
+  font-size: 0.75rem;
   white-space: normal;
   color: #8E8E93;
-  line-height: 2.3;
+  line-height: 2;
 `;
 
 const Container = styled.div`
@@ -74,5 +73,4 @@ const Container = styled.div`
 `;
 
 const Line = styled.div`
-  margin-bottom: 6px;
 `;

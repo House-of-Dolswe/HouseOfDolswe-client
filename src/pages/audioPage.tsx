@@ -8,12 +8,18 @@ import SearchBar from "../components/searchBar";
 import Spinner from "../../public/loadingSpinner.gif";
 
 
+interface ScriptLine {
+  text: string;
+  start: number;
+  end: number;
+}
+
 interface AudioData {
   id: number,
   title: string;
   name: string;
   tags: string[];
-  script: string;
+  script: ScriptLine[];
   audioUrl: string;
 }
 
@@ -24,54 +30,76 @@ export default function AudioPage() {
     title: "누구세요?",
     name: "장춘배",
     tags: ["택배", "배달", "당근"],
-    script: "",
-    audioUrl: "public/audio/laughSound.mp3"
+    script: [],
+    audioUrl: "/audio/laughSound.mp3"
   },
   {
     id:2,
     title: "네~ 문 앞에 두고 가세요",
     name: "장춘배",
     tags: ["택배", "배달", "당근"],
-    script: "",
-    audioUrl: "public/audio/laughSound.mp3"
+    script: [],
+    audioUrl: "/audio/laughSound.mp3"
   },
   {
     id:3,
     title: "문 앞에 있는 거 가져가시면 돼요",
     name: "김OO",
     tags: ["택배", "배달", "당근"],
-    script: "",
-    audioUrl: "public/audio/laughSound.mp3"
+    script: [],
+    audioUrl: "/audio/laughSound.mp3"
     },
   {
     id:4,
     title: "제가 지금 씻고 있어서요~",
     name: "김OO",
     tags: ["택배", "배달", "당근"],
-    script: "",
-    audioUrl: "public/audio/laughSound.mp3"
+    script: [],
+    audioUrl: "/audio/laughSound.mp3"
   },
   {
     id:5,
     title: "지금 못 나가요",
     name: "슈퍼톤AI - VoiceA",
     tags: ["택시", "골목길", "당근"],
-    script: "어 어디야.<br />나: 나 택시 탔어<br /> 아 알겠어 거의 도착하면 카톡한번 줘 내려가있을게<br />나: 그래 알겠어<br />어 조심해서 와<br />나: 응 카톡할게~",
-    audioUrl: "public/audio/test.mp3"
+    script: [
+    { text: "어 어디쯤이야.", start: 0, end: 3.0 },
+    { text: "나: 나 택시 탔어", start: 3.0, end: 5.0 },
+    { text: "길 안 막혀?", start: 5.0, end: 6.3 },
+    { text: "나: 좀 막히네", start: 6.3, end: 7.4 },
+    { text: "어 알겠어~ 그, 도착하기 5분 전쯤에 카톡 한번 줘. 내려가있을게.", start: 7.4, end: 12.8 },
+    { text: "나: 응 카톡할게~", start: 12.8, end: 13.7 },
+    { text: "응~", start: 13.7, end: 15.0 }
+    ],
+    audioUrl: "/audio/test.mp3"
   },{
     id:6,
     title: "네~",
     name: "슈퍼톤AI - VoiceB",
     tags: ["택시", "골목길", "당근"],
-    script: "어 어디야.<br />나: 나 택시 탔어<br /> 아 알겠어 거의 도착하면 카톡한번 줘 내려가있을게<br />나: 그래 알겠어<br />어 조심해서 와<br />나: 응 카톡할게~",
-    audioUrl: "public/audio/test.mp3"
+    script: [
+    { text: "어 어디야.", start: 0, end: 1.8 },
+    { text: "나: 나 택시 탔어", start: 1.8, end: 4.2 },
+    { text: "아 알겠어 거의 도착하면 카톡한번 줘 내려가있을게", start: 4.2, end: 9.5 },
+    { text: "나: 그래 알겠어", start: 9.5, end: 11.5 },
+    { text: "어 조심해서 와", start: 11.5, end: 13.7 },
+    { text: "나: 응 카톡할게~", start: 13.7, end: 16.0 }
+    ],
+    audioUrl: "/audio/test.mp3"
   },{
     id:7,
     title: "아니요~",
     name: "슈퍼톤AI - VoiceB",
     tags: ["택시", "배달", "당근"],
-    script: "어 어디야.<br />나: 나 택시 탔어<br /> 아 알겠어 거의 도착하면 카톡한번 줘 내려가있을게<br />나: 그래 알겠어<br />어 조심해서 와<br />나: 응 카톡할게~",
-    audioUrl: "public/audio/test.mp3"
+    script: [
+    { text: "어 어디야.", start: 0, end: 1.8 },
+    { text: "나: 나 택시 탔어", start: 1.8, end: 4.2 },
+    { text: "아 알겠어 거의 도착하면 카톡한번 줘 내려가있을게", start: 4.2, end: 9.5 },
+    { text: "나: 그래 알겠어", start: 9.5, end: 11.5 },
+    { text: "어 조심해서 와", start: 11.5, end: 13.7 },
+    { text: "나: 응 카톡할게~", start: 13.7, end: 16.0 }
+    ],
+    audioUrl: "/audio/test.mp3"
   }
 ];
   
@@ -122,8 +150,10 @@ export default function AudioPage() {
   const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
   const [currentAudioId, setCurrentAudioId] = useState<number | null>(null);
   const [progress, setProgress] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [currentScript, setCurrentScript] = useState<ScriptLine[]>([]);
 
-  const handlePlayAudio = (id: number, audioUrl: string) => {
+  const handlePlayAudio = (id: number, audioUrl: string, script: ScriptLine[]) => {
   // 1) 이미 같은 오디오가 재생 중일 때 → 토글 (재생/정지)
   if (currentAudio && currentAudioId === id) {
     if (currentAudio.paused) {
@@ -144,19 +174,23 @@ export default function AudioPage() {
   newAudio.ontimeupdate = () => {
     if (!newAudio.duration) return;
     setProgress((newAudio.currentTime / newAudio.duration) * 100);
+    setCurrentTime(newAudio.currentTime);
   };
 
   // 오디오 끝나면 progress 초기화
   newAudio.onended = () => {
     setProgress(0);
+    setCurrentTime(0);
   };
 
   newAudio.play();
 
   setCurrentAudio(newAudio);
   setCurrentAudioId(id);
+  setCurrentScript(script);
 };
 
+  // 로딩 관리
   const { isLoading, stopLoading } = useLoading(true); 
 
   useEffect(() => {
@@ -228,8 +262,11 @@ export default function AudioPage() {
     onToggleBookmark={handleToggleBookmark}
     isBookmarked={bookmarks.includes(item.id)}
     isPlaying={currentAudioId === item.id && !currentAudio?.paused}
-    onPlayAudio={handlePlayAudio}
+    onPlayAudio={() =>
+            handlePlayAudio(item.id, item.audioUrl, item.script)
+          }
     progress={currentAudioId === item.id ? progress : 0}
+    currentTime={currentTime}
   />
 ))}
 

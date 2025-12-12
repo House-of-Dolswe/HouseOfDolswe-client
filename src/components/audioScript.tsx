@@ -1,23 +1,56 @@
 import styled from "styled-components";
 
+interface ScriptLine {
+  text: string;
+  start: number;
+  end: number;
+}
+
 interface AudioScriptProps {
-  script: string;
+  script: ScriptLine[];
   playClickCount: number;
+  currentTime: number;
 }
 
 
 export default function AudioScript({ 
   script,
-  playClickCount }: AudioScriptProps) {
+  playClickCount,
+  currentTime }: AudioScriptProps) {
 
   const isPlaying = playClickCount % 2 === 1;
 
-  return (
+
+    return (
     <Container>
       <PlayText>{isPlaying ? "[재생 중]" : "[대본]"}</PlayText>
-      <ScriptBox dangerouslySetInnerHTML={{ __html: script }} />
+
+      <ScriptBox>
+        {script.map((line, idx) => {
+          const isActive =
+            currentTime >= line.start && currentTime < line.end;
+
+          const isUser = line.text.trim().startsWith("나:");
+          
+          return (
+            <Line
+              key={idx}
+              style={{
+                color: isActive 
+                ? "#000" 
+                : isUser
+                ? "#A304FF"
+                : "#8E8E93",
+                fontWeight: isActive ? "bold" : "normal",
+              }}
+            >
+              {line.text}
+            </Line>
+          );
+        })}
+      </ScriptBox>
     </Container>
-  );
+    );
 }
 
 const PlayText = styled.div`
@@ -38,4 +71,8 @@ const ScriptBox = styled.div`
 
 const Container = styled.div`
   padding: 2vh 7vw;
+`;
+
+const Line = styled.div`
+  margin-bottom: 6px;
 `;

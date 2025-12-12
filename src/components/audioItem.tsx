@@ -6,6 +6,11 @@ import BookmarkOn from '../../public/bookmarkFill.svg';
 import PlayButton from '../../public/playButton.svg';
 import AudioScript from './audioScript';
 
+interface ScriptLine {
+  text: string;
+  start: number;
+  end: number;
+}
 
 interface AudioItemProps {
   id: number,
@@ -19,11 +24,12 @@ interface AudioItemProps {
   onSelect: () => void;
   onToggleBookmark: (id: number) => void;
   isBookmarked: boolean;
-  script: string;
+  script: ScriptLine[];
   onPlayAudio: (id: number, url: string) => void;
   audioUrl: string;
   isPlaying: boolean;
   progress: number;
+  currentTime: number;
 }
 
 export default function AudioItem({ 
@@ -41,7 +47,8 @@ export default function AudioItem({
   script,
   onPlayAudio,
   audioUrl,
-  progress }: AudioItemProps) {
+  progress,
+  currentTime }: AudioItemProps) {
 
   const [playClickCount, setPlayClickCount] = useState(0);
   const isDimmed = !isInitialLoad && !selected;
@@ -96,6 +103,7 @@ export default function AudioItem({
         <AudioScript
           script={script}
           playClickCount={playClickCount}
+          currentTime={currentTime}
         />
       )}
     </>

@@ -38,10 +38,12 @@ export default function Call({ onSelect }: TimePickerProps) {
 
   return (
     <>
-       <Header/>
-       <PickerWrapper>
-       <Picker value={value} onChange={handleChange} height={200} itemHeight={38}>
-      {/* 시 */}
+       <Header />
+       <TitleBar>돌쇠의 전화 Beta</TitleBar>
+<PickerContainer>
+  {/* 시 */}
+  <PickerColumnWrapper>
+    <Picker value={value} onChange={handleChange} height={170} itemHeight={33}>
       <Picker.Column name="hours">
         {hoursList.map((item) => (
           <StyledItem
@@ -49,12 +51,17 @@ export default function Call({ onSelect }: TimePickerProps) {
             value={item}
             selected={hasInteracted && value.hours === item}
           >
-            {item} 시
+            {item}
           </StyledItem>
         ))}
       </Picker.Column>
+    </Picker>
+    <UnitText>시간</UnitText>
+  </PickerColumnWrapper>
 
-      {/* 분 */}
+  {/* 분 */}
+  <PickerColumnWrapper>
+    <Picker value={value} onChange={handleChange} height={170} itemHeight={33}>
       <Picker.Column name="minutes">
         {minutesList.map((item) => (
           <StyledItem
@@ -62,12 +69,17 @@ export default function Call({ onSelect }: TimePickerProps) {
             value={item}
             selected={hasInteracted && value.minutes === item}
           >
-            {item} 분
+            {item}
           </StyledItem>
         ))}
       </Picker.Column>
+    </Picker>
+    <UnitText>분</UnitText>
+  </PickerColumnWrapper>
 
-      {/* 초 */}
+  {/* 초 */}
+  <PickerColumnWrapper>
+    <Picker value={value} onChange={handleChange} height={170} itemHeight={33}>
       <Picker.Column name="seconds">
         {secondsList.map((item) => (
           <StyledItem
@@ -75,41 +87,58 @@ export default function Call({ onSelect }: TimePickerProps) {
             value={item}
             selected={hasInteracted && value.seconds === item}
           >
-            {item} 초
+            {item}
           </StyledItem>
         ))}
       </Picker.Column>
     </Picker>
-    </PickerWrapper>
-       <Footer />
+    <UnitText>초</UnitText>
+  </PickerColumnWrapper>
+</PickerContainer>
+
+<Footer />
+
     </>
   );
 }
 
+
+const TitleBar = styled.div`
+  width: 100%;
+  border-bottom: 0.2vh solid #EEEEEE;
+  color: #616161;
+  font-weight: 500;
+  font-size: 4vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2vw;
+  margin-top: 1vh;
+`
+const PickerContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 11vw;
+  margin-top: 10vh;
+`;
+
+const PickerColumnWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const UnitText = styled.div`
+  margin-left: 2vw;
+  font-size: 4vw;
+  color: black;
+`;
+
 const StyledItem = styled(Picker.Item)<{ selected: boolean }>`
-  height: 40px;
-  line-height: 40px;
+  height: 38px;
+  line-height: 38px;
   text-align: center;
-  font-size: ${({ selected }) => (selected ? "6vw" : "5vw")};
+  font-size: ${({ selected }) => (selected ? "8vw" : "5vw")};
   color: ${({ selected }) => (selected ? "#000" : "rgba(0, 0, 0, 0.4)")};
-  font-weight: ${({ selected }) => (selected ? "500" : "300")};
+  font-weight: ${({ selected }) => (selected ? "400" : "300")};
 `;
-
-const PickerWrapper = styled.div`
-  /* 중앙 선택 영역 선을 흰색으로 덮기 */
-  .react-mobile-picker-highlight,
-  .react-mobile-picker-highlight::before,
-  .react-mobile-picker-highlight::after {
-    background-color: white !important;
-    border-color: white !important;
-  }
-
-  /* 위/아래 회색 라인 */
-  .react-mobile-picker-view > div {
-    border-top: 1px solid white !important;
-    border-bottom: 1px solid white !important;
-  }
-`;
-
-
-

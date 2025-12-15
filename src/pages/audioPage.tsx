@@ -151,9 +151,8 @@ export default function AudioPage() {
   const [currentAudioId, setCurrentAudioId] = useState<number | null>(null);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-  const [currentScript, setCurrentScript] = useState<ScriptLine[]>([]);
-
-  const handlePlayAudio = (id: number, audioUrl: string, script: ScriptLine[]) => {
+  
+  const handlePlayAudio = (id: number, audioUrl: string) => {
   // 1) 이미 같은 오디오가 재생 중일 때 → 토글 (재생/정지)
   if (currentAudio && currentAudioId === id) {
     if (currentAudio.paused) {
@@ -187,7 +186,7 @@ export default function AudioPage() {
 
   setCurrentAudio(newAudio);
   setCurrentAudioId(id);
-  setCurrentScript(script);
+
 };
 
   // 로딩 관리
@@ -263,7 +262,7 @@ export default function AudioPage() {
     isBookmarked={bookmarks.includes(item.id)}
     isPlaying={currentAudioId === item.id && !currentAudio?.paused}
     onPlayAudio={() =>
-            handlePlayAudio(item.id, item.audioUrl, item.script)
+            handlePlayAudio(item.id, item.audioUrl)
           }
     progress={currentAudioId === item.id ? progress : 0}
     currentTime={currentTime}

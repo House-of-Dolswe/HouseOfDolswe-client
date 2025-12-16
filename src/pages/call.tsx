@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Picker from "react-mobile-picker";
 import styled from "styled-components";
 import Footer from "../components/footer";
@@ -20,12 +20,18 @@ export default function Call({ onSelect }: TimePickerProps) {
   });
 
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [totalSeconds, setTotalSeconds] = useState<number | null>(null);
+  const [isRunning, setIsRunning] = useState(false);
+
+  const timerRef = useRef<number | null>(null);
 
   const hoursList = Array.from({ length: 24 }, (_, i) => i.toString());
   const minutesList = Array.from({ length: 60 }, (_, i) => i.toString());
   const secondsList = Array.from({ length: 60 }, (_, i) => i.toString());
 
   const handleChange = (newValue: typeof value) => {
+    if (isRunning) return;
+
     if (!hasInteracted) setHasInteracted(true);
     setValue(newValue);
 
@@ -36,10 +42,63 @@ export default function Call({ onSelect }: TimePickerProps) {
     });
   };
 
+  const secondsToPickerValue = (seconds: number) => {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = seconds % 60;
+
+    return {
+      hours: h.toString(),
+      minutes: m.toString(),
+      seconds: s.toString(),
+    };
+  };
+
+  const startTimer = () => {
+  const seconds =
+    Number(value.hours) * 3600 +
+    Number(value.minutes) * 60 +
+    Number(value.seconds);
+
+  if (seconds <= 0) return;
+
+  setTotalSeconds(seconds);
+  setIsRunning(true);
+};
+
+
+  const resetTimer = () => {
+    setIsRunning(false);
+    setTotalSeconds(0);
+    setValue({ hours: "0", minutes: "0", seconds: "0" });
+  };
+
+  useEffect(() => {
+    if (!isRunning || totalSeconds === null) return;
+
+    timerRef.current = window.setInterval(() => {
+      setTotalSeconds((prev) => {
+        if (prev === null || prev <= 1) {
+          clearInterval(timerRef.current!);
+          setIsRunning(false);
+          return 0;
+        }
+
+        const next = prev - 1;
+        setValue(secondsToPickerValue(next));
+        return next;
+      });
+    }, 1000);
+
+    return () => clearInterval(timerRef.current!);
+  }, [isRunning]);
+
+
   return (
     <>
        <Header />
        <TitleBar>돌쇠의 전화 Beta</TitleBar>
+
 <PickerContainer>
   {/* 시 */}
   <PickerColumnWrapper>
@@ -49,7 +108,7 @@ export default function Call({ onSelect }: TimePickerProps) {
           <StyledItem
             key={item}
             value={item}
-            selected={hasInteracted && value.hours === item}
+            selected={value.hours === item}
           >
             {item}
           </StyledItem>
@@ -67,7 +126,7 @@ export default function Call({ onSelect }: TimePickerProps) {
           <StyledItem
             key={item}
             value={item}
-            selected={hasInteracted && value.minutes === item}
+            selected={value.minutes === item}
           >
             {item}
           </StyledItem>
@@ -85,7 +144,7 @@ export default function Call({ onSelect }: TimePickerProps) {
           <StyledItem
             key={item}
             value={item}
-            selected={hasInteracted && value.seconds === item}
+            selected={value.seconds === item}
           >
             {item}
           </StyledItem>
@@ -95,6 +154,14 @@ export default function Call({ onSelect }: TimePickerProps) {
     <UnitText>초</UnitText>
   </PickerColumnWrapper>
 </PickerContainer>
+
+      <ButtonRow>
+        {!isRunning ? (
+          <ActionButton isRunning={false} onClick={startTimer}>시작</ActionButton>
+        ) : (
+          <ActionButton isRunning={true} onClick={resetTimer}>취소</ActionButton>
+        )}
+      </ButtonRow>
 
 <Footer />
 
@@ -119,7 +186,7 @@ const PickerContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 11vw;
-  margin-top: 10vh;
+  margin-top: 13vh;
 `;
 
 const PickerColumnWrapper = styled.div`
@@ -141,4 +208,22 @@ const StyledItem = styled(Picker.Item)<{ selected: boolean }>`
   font-size: ${({ selected }) => (selected ? "8vw" : "5vw")};
   color: ${({ selected }) => (selected ? "#000" : "rgba(0, 0, 0, 0.4)")};
   font-weight: ${({ selected }) => (selected ? "400" : "300")};
+`;
+
+const ButtonRow = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+`;
+
+const ActionButton = styled.button<{isRunning: boolean}>`
+  padding: 7vw 3vh;
+  font-size: 3.5vw;
+  border-radius: 8px;
+  border: none;
+  border-radius: 50%;
+  background: ${({ isRunning }) =>
+    isRunning ? "#F2F2F2" : "rgba(163, 4, 255, 0.2)"};
+  color: ${({ isRunning }) => (isRunning ? "#000000" : "#A304FF")};
+  margin-top: 7vh;
 `;

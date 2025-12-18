@@ -74,24 +74,27 @@ export default function Call({ onSelect }: TimePickerProps) {
   };
 
   useEffect(() => {
-    if (!isRunning || totalSeconds === null) return;
+  if (!isRunning || totalSeconds === null) return;
 
-    timerRef.current = window.setInterval(() => {
-      setTotalSeconds((prev) => {
-        if (prev === null || prev <= 1) {
-          clearInterval(timerRef.current!);
-          setIsRunning(false);
-          return 0;
-        }
+  timerRef.current = window.setInterval(() => {
+    setTotalSeconds((prev) => {
+      if (prev === null) return prev;
 
-        const next = prev - 1;
-        setValue(secondsToPickerValue(next));
-        return next;
-      });
-    }, 1000);
+      if (prev === 0) {
+        clearInterval(timerRef.current!);
+        setIsRunning(false);
+        return 0;
+      }
 
-    return () => clearInterval(timerRef.current!);
+      const next = prev - 1;
+      setValue(secondsToPickerValue(next));
+      return next;
+     });
+   }, 1000);
+
+   return () => clearInterval(timerRef.current!);
   }, [isRunning]);
+
 
 
   return (
@@ -163,8 +166,7 @@ export default function Call({ onSelect }: TimePickerProps) {
         )}
       </ButtonRow>
 
-<Footer />
-
+      <Footer />
     </>
   );
 }

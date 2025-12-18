@@ -103,7 +103,17 @@ export default function AudioPage() {
   }
 ];
   
+  // 즐겨찾기
+  const [bookmarks, setBookmarks] = useState<number[]>([]);
 
+  const handleToggleBookmark = (id: number) => {
+  setBookmarks(prev =>
+    prev.includes(id)
+      ? prev.filter(b => b !== id) // 이미 있으면 제거
+      : [...prev, id]              // 없으면 추가
+   );
+  };
+  
 // 카테고리 분류
   type CategoryType = "문 앞(택배,배달)" | "귀가(택시,골목길)" | "즐겨찾기";
   const [category, setCategory] = useState<CategoryType>("문 앞(택배,배달)");
@@ -134,17 +144,6 @@ export default function AudioPage() {
       item.tags.some((tag) => tag.includes(search))
   );
 
-
-  // 즐겨찾기
-  const [bookmarks, setBookmarks] = useState<number[]>([]);
-
-  const handleToggleBookmark = (id: number) => {
-  setBookmarks(prev =>
-    prev.includes(id)
-      ? prev.filter(b => b !== id) // 이미 있으면 제거
-      : [...prev, id]              // 없으면 추가
-   );
-  };
 
   // 오디오 파일
   const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);

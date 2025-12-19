@@ -4,25 +4,20 @@ import KakaoIcon from "../../public/kakaoIcon.svg";
 
 
 export default function GuestHome() {
-
-  console.log("GuestHome 렌더됨");
-
   const loginWithKakao = () => {
-    console.log("버튼 클릭됨!"); 
     const REST_API_KEY = import.meta.env.VITE_KAKAO_CLIENT_ID;
-    const REDIRECT_URI = `${import.meta.env.VITE_FRONTEND_BASE_URL}/login/oauth`; 
-    // ← 카카오 설정에서 등록한 redirect URI와 같아야 함!
+
+    // redirect_uri 는 백엔드 콜백
+    const REDIRECT_URI = `${import.meta.env.VITE_API_BASE_URL}/api/login/kakao`;
 
     const kakaoAuthUrl =
-    `https://kauth.kakao.com/oauth/authorize` +
-    `?response_type=code` +
-    `&client_id=${REST_API_KEY}` +
-    `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;
+      `https://kauth.kakao.com/oauth/authorize` +
+      `?response_type=code` +
+      `&client_id=${REST_API_KEY}` +
+      `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;
 
-    console.log("카카오 요청 URL:", kakaoAuthUrl);
+    // 카카오로 이동
     window.location.href = kakaoAuthUrl;
-    console.log(`${import.meta.env.VITE_API_BASE_URL}/api/login/kakao`);
-    
   };
 
   

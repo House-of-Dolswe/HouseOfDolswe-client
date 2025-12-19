@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
-import KakaoRedirectHandler from "./pages/KakaoRedirectHandler";
 import AudioPage from "./pages/audioPage";
 import GuestHome from "./pages/guestHome";
 import Onboarding from "./pages/onboarding";
@@ -12,12 +11,12 @@ import ServicePolicy from "./pages/settings/servicePolicy";
 import DataPolicy from "./pages/settings/dataPolicy";
 
 
+
 function App() {
   return (
       <BrowserRouter>
       <Routes>
         <Route path="/" element={<GuestHome />} />
-        <Route path="/login/oauth" element={<KakaoRedirectHandler />} />
         <Route path="/audio" element={<AudioPage />} />
         <Route path="/guest" element={<Home />} />
         <Route path="/onboarding" element={<Onboarding />} />

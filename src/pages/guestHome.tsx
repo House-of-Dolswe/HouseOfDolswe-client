@@ -6,9 +6,7 @@ import KakaoIcon from "../../public/kakaoIcon.svg";
 export default function GuestHome() {
   const loginWithKakao = () => {
     const REST_API_KEY = import.meta.env.VITE_KAKAO_CLIENT_ID;
-
-    // redirect_uri 는 백엔드 콜백
-    const REDIRECT_URI = `${import.meta.env.VITE_API_BASE_URL}/api/login/kakao`;
+    const REDIRECT_URI = `${import.meta.env.VITE_FRONTEND_BASE_URL}/login/oauth`;
 
     const kakaoAuthUrl =
       `https://kauth.kakao.com/oauth/authorize` +
@@ -16,7 +14,7 @@ export default function GuestHome() {
       `&client_id=${REST_API_KEY}` +
       `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;
 
-    // 카카오로 이동
+
     window.location.href = kakaoAuthUrl;
   };
 
